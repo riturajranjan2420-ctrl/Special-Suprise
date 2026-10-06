@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Someone Special ✨</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    background:#05050a;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+.bg{
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at 20% 20%,#34205c55,transparent 35%),
+    radial-gradient(circle at 80% 70%,#812b5750,transparent 35%),
+    linear-gradient(135deg,#030305,#100914,#050509);
+    z-index:-3;
+}
+
+.glow{
+    position:fixed;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    background:#b56cff;
+    filter:blur(100px);
+    opacity:.16;
+    animation:moveGlow 8s infinite alternate ease-in-out;
+    z-index:-2;
+}
+
+@keyframes moveGlow{
+    from{transform:translate(-80px,-50px)}
+    to{transform:translate(70vw,55vh)}
+}
+
+/* START SCREEN */
+.startScreen{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:
+    radial-gradient(circle,#21152f,#050509 65%);
+    transition:1s ease;
+}
+
+.startScreen.hide{
+    opacity:0;
+    pointer-events:none;
+}
+
+.startContent{
+    padding:30px;
+}
+
+.startSmall{
+    color:#c9a8ff;
+    letter-spacing:5px;
+    font-size:13px;
+    margin-bottom:22px;
+}
+
+.startTitle{
+    font-size:clamp(42px,11vw,80px);
+    background:linear-gradient(90deg,#fff,#e5baff,#ffb8d7,#fff);
+    -webkit-background-clip:text;
+    color:transparent;
+    background-size:300%;
+    animation:shine 5s infinite linear;
+}
+
+.startSub{
+    color:#bbb4c7;
+    font-size:17px;
+    margin-top:20px;
+    line-height:1.6;
+}
+
+.startBtn{
+    margin-top:35px;
+    padding:15px 38px;
+    border:0;
+    border-radius:50px;
+    color:white;
+    font-size:17px;
+    background:linear-gradient(90deg,#a76cff,#ff72a9);
+    box-shadow:0 0 30px #b76cff66;
+}
+
+@keyframes shine{
+    from{background-position:0%}
+    to{background-position:300%}
+}
+
+/* SLIDES */
+.slide{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:30px;
+    opacity:0;
+    transform:scale(1.08);
+    pointer-events:none;
+    transition:1s ease;
+}
+
+.slide.active{
+    opacity:1;
+    transform:scale(1);
+    pointer-events:auto;
+}
+
+.content{
+    max-width:700px;
+}
+
+.small{
+    font-size:14px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:#c9a8ff;
+    margin-bottom:20px;
+}
+
+h1{
+    font-size:clamp(38px,9vw,80px);
+    line-height:1.05;
+    background:linear-gradient(90deg,#fff,#e6c8ff,#ffb9d7,#fff);
+    -webkit-background-clip:text;
+    color:transparent;
+    background-size:300%;
+    animation:shine 5s infinite linear;
+}
+
+p{
+    margin-top:25px;
+    font-size:clamp(17px,4vw,24px);
+    line-height:1.7;
+    color:#ded9e7;
+}
+
+.quote{
+    margin-top:30px;
+    font-size:clamp(20px,5vw,32px);
+    font-style:italic;
+    color:#fff;
+}
+
+.music{
+    position:fixed;
+    top:20px;
+    right:20px;
+    width:45px;
+    height:45px;
+    padding:0;
+    margin:0;
+    border-radius:50%;
+    background:#ffffff12;
+    border:1px solid #ffffff25;
+    color:white;
+    font-size:20px;
+    z-index:50;
+}
+
+.particle{
+    position:fixed;
+    bottom:-30px;
+    font-size:18px;
+    opacity:.7;
+    animation:float 7s linear forwards;
+    pointer-events:none;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:0;
+    }
+    15%{opacity:.8}
+    100%{
+        transform:translateY(-110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+.progress{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:7px;
+    z-index:20;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#555;
+}
+
+.dot.active{
+    background:#e6b9ff;
+    box-shadow:0 0 10px #d78cff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="glow"></div>
+
+<!-- MUSIC FILE
+     IMPORTANT:
+     Put spclx.mp3 in the SAME folder as this HTML file.
+-->
+<audio id="music" loop preload="auto">
+    <source src="spclx.mp3" type="audio/mpeg">
+</audio>
+
+<!-- START SCREEN -->
+<div class="startScreen" id="startScreen">
+    <div class="startContent">
+
+        <div class="startSmall">
+            A LITTLE SOMETHING FOR YOU
+        </div>
+
+        <div class="startTitle">
+            Someone Special ✨
+        </div>
+
+        <div class="startSub">
+            There's something I wanted you to feel...
+        </div>
+
+        <button class="startBtn" onclick="startPresentation()">
+            START ✦
+        </button>
+
+    </div>
+</div>
+
+<!-- MUSIC BUTTON -->
+<button class="music" onclick="toggleMusic()">♫</button>
+
+
+<!-- SLIDE 1 -->
+<section class="slide active">
+    <div class="content">
+
+        <div class="small">This isn't just a presentation...</div>
+
+        <h1>It's a little feeling. ✨</h1>
+
+        <p>
+            Kuch log life mein bas aate hain...<br>
+            aur kuch log quietly<br>
+            <b>special ban jaate hain.</b>
+        </p>
+
+    </div>
+</section>
+
+
+<!-- SLIDE 2 -->
+<section class="slide">
+    <div class="content">
+
+        <div class="small">For You</div>
+
+        <h1>You're Different.</h1>
+
+        <p>
+            Shayad tumhe pata bhi nahi,<br>
+            but tumhari presence mein<br>
+            ek alag hi warmth hai.
+        </p>
+
+    </div>
+</section>
+
+
+<!-- SLIDE 3 -->
+<section class="slide">
+    <div class="content">
+
+        <div class="small">Some Connections</div>
+
+        <h1>Don't Need A Name.</h1>
+
+        <p>
+            Har connection ko define karna zaroori nahi hota.
+            Kuch relationships bas feel kiye jaate hain.
+        </p>
+
+        <div class="quote">
+            “Some people become special<br>
+            without even trying.”
+        </div>
+
+    </div>
+</section>
+
+
+<!-- SLIDE 4 -->
+<section class="slide">
+    <div class="content">
+
+        <div class="small">And honestly...</div>
+
+        <h1>I Like This Connection.</h1>
+
+        <p>
+            No pressure.<br>
+            No expectations.<br>
+            Bas ek genuine sa connection...
+            jo apni jagah khud bana gaya.
+        </p>
+
+    </div>
+</section>
+
+
+<!-- SLIDE 5 -->
+<section class="slide">
+    <div class="content">
+
+        <div class="small">One Little Thing</div>
+
+        <h1>Thank You. 🤍</h1>
+
+        <p>
+            Thank you for being someone<br>
+            jiske saath baat karna,<br>
+            smile karna, ya bas connected rehna<br>
+            thoda sa aur special feel hota hai.
+        </p>
+
+    </div>
+</section>
+
+
+<!-- SLIDE 6 -->
+<section class="slide">
+    <div class="content">
+
+        <div class="small">Finally...</div>
+
+        <h1>Stay Special. ✨</h1>
+
+        <p>
+            Life kitni bhi busy ho jaaye,<br>
+            kuch logon ki value<br>
+            time ke saath kam nahi hoti.
+        </p>
+
+        <div class="quote">
+            “You are one of those people.”
+        </div>
+
+    </div>
+</section>
+
+
+<div class="progress" id="progress"></div>
+
+
+<script>
+
+const slides = document.querySelectorAll(".slide");
+const music = document.getElementById("music");
+const startScreen = document.getElementById("startScreen");
+const progress = document.getElementById("progress");
+
+let current = 0;
+let started = false;
+
+
+/* CREATE DOTS */
+slides.forEach((_,i)=>{
+
+    const dot = document.createElement("div");
+
+    dot.className = "dot";
+
+    if(i === 0)
+        dot.classList.add("active");
+
+    progress.appendChild(dot);
+
+});
+
+const dots = document.querySelectorAll(".dot");
+
+
+/* START EVERYTHING */
+function startPresentation(){
+
+    started = true;
+
+    /*
+       Browser allows music here because
+       this function is triggered directly
+       by the START button.
+    */
+
+    music.volume = 0.7;
+
+    music.play().catch(function(error){
+        console.log("Music could not start:",error);
+    });
+
+    startScreen.classList.add("hide");
+
+}
+
+
+/* CHANGE SLIDE */
+function showSlide(index){
+
+    slides[current].classList.remove("active");
+    dots[current].classList.remove("active");
+
+    current = index;
+
+    slides[current].classList.add("active");
+    dots[current].classList.add("active");
+}
+
+
+/* NEXT */
+function nextSlide(){
+
+    if(!started) return;
+
+    if(current < slides.length - 1){
+        showSlide(current + 1);
+    }else{
+        showSlide(0);
+    }
+
+}
+
+
+/* MUSIC ON/OFF */
+function toggleMusic(){
+
+    if(music.paused){
+
+        music.play().catch(function(){
+            alert("Pehle START button dabao.");
+        });
+
+    }else{
+
+        music.pause();
+
+    }
+
+}
+
+
+/* TAP RIGHT / LEFT */
+document.body.addEventListener("click",function(e){
+
+    if(e.target.closest("button"))
+        return;
+
+    if(!started)
+        return;
+
+    if(e.clientX > window.innerWidth / 2){
+
+        nextSlide();
+
+    }else{
+
+        showSlide(
+            (current - 1 + slides.length) % slides.length
+        );
+
+    }
+
+});
+
+
+/* KEYBOARD */
+document.addEventListener("keydown",function(e){
+
+    if(!started) return;
+
+    if(e.key === "ArrowRight" || e.key === " "){
+        nextSlide();
+    }
+
+    if(e.key === "ArrowLeft"){
+        showSlide(
+            (current - 1 + slides.length) % slides.length
+        );
+    }
+
+});
+
+
+/* SWIPE */
+let startX = 0;
+
+document.addEventListener("touchstart",function(e){
+
+    startX = e.touches[0].clientX;
+
+});
+
+document.addEventListener("touchend",function(e){
+
+    if(!started) return;
+
+    const endX = e.changedTouches[0].clientX;
+
+    if(startX - endX > 50){
+
+        nextSlide();
+
+    }
+
+    if(endX - startX > 50){
+
+        showSlide(
+            (current - 1 + slides.length) % slides.length
+        );
+
+    }
+
+});
+
+
+/* FLOATING PARTICLES */
+const symbols = ["✦","✧","♡","✦","•","♡"];
+
+function createParticle(){
+
+    const p = document.createElement("div");
+
+    p.className = "particle";
+
+    p.innerText =
+        symbols[Math.floor(Math.random()*symbols.length)];
+
+    p.style.left =
+        Math.random()*100 + "vw";
+
+    p.style.fontSize =
+        (12 + Math.random()*18) + "px";
+
+    p.style.animationDuration =
+        (5 + Math.random()*5) + "s";
+
+    document.body.appendChild(p);
+
+    setTimeout(function(){
+
+        p.remove();
+
+    },10000);
+
+}
+
+setInterval(createParticle,500);
+
+</script>
+
+</body>
+</html>
